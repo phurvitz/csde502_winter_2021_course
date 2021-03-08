@@ -1,0 +1,10 @@
+---
+output:
+  bookdown::html_document2
+---
+
+```{r tableX}
+knitr::kable(x = head(iris), caption = "First 6 lines of `iris`")
+```
+
+See Table \@ref(tab:tableX) for the first few lines of the `iris` data set..

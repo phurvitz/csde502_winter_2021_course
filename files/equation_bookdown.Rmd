@@ -1,0 +1,91 @@
+---
+title: "Untitled"
+author: "Philip M. Hurvitz"
+date: "January 21, 2021"
+output: 
+    bookdown::html_document2:
+        number_sections: true
+        self_contained: true
+        code_folding: hide
+        toc: true
+        toc_float:
+            collapsed: true
+            smooth_scroll: false
+    pdf_document:
+        number_sections: true
+        toc: true
+        fig_cap: yes
+        keep_tex: yes
+urlcolor: blue 
+---
+
+### Equations
+Equations should be numbered in manuscripts. Using `bookdown` makes this quite easy. The equations themselves require $\LaTeX$ syntax. There are numerous web sites with examples and tutorials for creating mathematical expressions with $\LaTeX$ In this example, we include Einstein's famous equation:
+
+<pre>
+\begin{equation}
+  E=mc^2
+  (\#eq:emc)
+\end{equation}
+</pre>
+
+and the sum of squares:
+
+<pre>
+\begin{equation}
+  \sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}
+  (\#eq:sumn)
+\end{equation}
+</pre>
+
+The label for the equation is set with `(\#eq:emc)` and can be referenced using `\@ref(eq:emc)`. Operationalized, we see:
+
+Einstein's equation, energy equals mass times the square of the speed of light is shown in \@ref(eq:emc).
+
+\begin{equation}
+  E=mc^2
+  (\#eq:emc)
+\end{equation}
+
+To make a sum of squares of _n_ first integers, see \@ref(eq:sumn).
+
+\begin{equation}
+  \sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}
+  (\#eq:sumn)
+\end{equation}
+
+
+```{r, fig.width=3, fig.height=3}
+# how many unique bins? 
+bins <- length(unique(ages$age))
+
+# create the graphic
+g <- ggplot(data = ages, mapping = aes(x = age)) +
+    geom_histogram(bins = bins)
+
+# print the graphic
+print(g)
+```
+
+
+```{r}
+(A <- ages %>% 
+    group_by(age) %>% 
+    summarize(n = n()) %>% 
+    mutate(cumsum = cumsum(n),
+        "%" = round(n / sum(n) * 100, 1),
+        "cum %" = round(cumsum(n / sum(n) * 100), 1)))
+```
+
+
+```{r}
+ages %>% 
+    group_by(age) %>% 
+    summarize(n = n()) %>% 
+    mutate(cumsum = cumsum(n),
+        "%" = round(n / sum(n) * 100, 1),
+        "cum %" = round(cumsum(n / sum(n) * 100), 1)) %>% 
+    kable() %>% 
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F, position = "left") 
+```
+

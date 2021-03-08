@@ -1,0 +1,14 @@
+---
+title: "Untitled"
+author: "Philip M. Hurvitz"
+date: "January 8, 2021"
+output: html_document
+---
+
+foo
+
+<code>
+\`\`\`\{r\}
+</code>
+
+bar

@@ -1,0 +1,356 @@
+# Week 5 {#week5}
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(magrittr)
+library(knitr)
+library(kableExtra)
+library(readstata13)
+```
+
+<h2>Topic: Git</h2>
+This week's topic is a brief introduction to [Git](https://git-scm.com/), the free and open source version control system for text-based files. Much of the material in this lesson is derived from the [Software Carpentry Git tutorial](https://swcarpentry.github.io/git-novice/).
+
+## Why use version control?
+Version control is simply having control over various versions of your documents. In the context of code-based research using text files such as `.R`, `.Rmd`, `.tex`, `.sql`, `.do`, at the simplest level, version control means having the ability to track changes to your files. In more advanced levels, you should be able to revert to previous versions, collaborate with others and know who did what and when, or to merge together edits made by more than one person
+
+We covered one form of version control in a previous assignment and in the section of this document on [File systems](#file-systems). The version control system was simply keeping copies of existing files and naming new files according to a temporal sequence, with date being the suggested method of nomenclature.
+
+While keeping backup, dated copies of files is not necessarily a bad approach, it suffers from a few major limitations, including:
+
+1. because it relies on saving different versions of a file, it can lead to a proliferation of files
+1. it is not often easy to know what changes were made from version to version
+
+Jorge Cham's ([Piled Higher and Deeper](http://www.phdcomics.com)) comic points out what happens to a typical graduate student's "final" version:
+
+[![](images/week05/phd101212s.png)](http://www.phdcomics.com)
+
+## Why use Git?
+Version controls systems have been in use since the early 1980s. Commonly used applications are RCS, CVS, SVN, and Subversion. However, some of these require centralized servers, are limited in their capabilities, and are not free.
+
+Git has multiple advantages:
+
+* free
+* supports complex work flows with branching, merging, etc., allowing multiple collaborators to work on the same set of files at the same time
+* does not require a centralized server (version control can be managed completely within a single computer)
+    * it is possible to use online repositories, such as github.com
+* can be used within RStudio
+* has a large community of users (i.e., free advice)
+
+## Limitations of version control systems
+Although version control systems are quite useful, there are some potential drawbacks.
+
+1. requires learning yet another somewhat-complicated system
+1. requires mindfulness
+    * recorded changes are best performed interactively
+    * can only "undo" changes that were committed
+1. designed for text files; cannot deal with binary files, e.g., Word or other formats
+
+## A brief Git tutorial
+Here we will be using the basic functions of Git while building up an Rmd file.
+
+### Setting up Git in RStudio
+We will be working on CSDE Terminal Server 4 (see [Getting started on Terminal Server 4](#getting-started-on-terminal-server-4)). 
+
+Start RStudio and open a web browser.
+
+### Creating a repository
+Using the web browser, go to [github.com](http://github.com) and create a repository named `git_r`.
+
+![](images/week05/2021-02-04_21_21_47.png)
+
+Make the repository public and add a README file.
+
+![](images/week05/2021-02-04_21_37_13.png)
+
+Switch back to RStudio and select `File > New Project` and in the choice of project types, select `Version Control`. This will streamline the process of linking the RStudio project with github.
+
+![](images/week05/2021-02-04_21_39_10.png)
+
+Choose `Git` as the type of version control.
+
+![](images/week05/2021-02-04_21_39_46.png)
+
+Enter the complete URL of your new Git repository. The project directly name should automatically be set as the basename pf the URL. If not, enter `git_r`.
+
+![](images/week05/2021-02-04_21_52_48.png)
+
+Because we need to define where on the local file system the project files will be stored, click `Browse` and navigate to your `H:` drive (note that this is your UDrive).
+
+![](images/week05/2021-02-04_21_53_32.png)
+
+After you have specified the repository URL, project directory name, and parent directory of the project directory, click `Create Project`.
+
+![](images/week05/2021-02-04_21_54_04.png)
+
+### Tracking changes
+One of the files we will change is [week_01.Rmd](files/week_01.Rmd), so download this to the main folder of your project.
+
+The first file we will make changes to is `README.md`.
+
+Add some text explaining what purpose the repository serves.
+
+![](images/week05/2021-02-04_22_09_11.png)
+
+Save the changes to the README.md file. If you do not see updates in the Git tab, click the `Refresh listing` button. You may need to do this frequently if your file changes are frequent. Note the status of files will only change when the files are saved.
+
+![](images/week05/2021-02-04_22_37_42.png)
+
+You should see a blue "M" next to the README.md file. Click the check box for `Staged` to prepare to commit the changes to the file and prepare to push to the remote server.
+
+![](images/week05/2021-02-04_22_11_45.png)
+
+Click `Commit` and a new window will open. Any deletions are shown with a light red background. Additions are shown with a light green background, and text that has not changed will have a white background.
+
+Enter some explanatory text in the `Commit message` panel. This message will help identify historical commits. The explanatory text should succinctly describe any changes you have made.
+
+The idea is to make commits each time you have substantially changed your code. If you wait too long between commits, the number of changes in a single commit may be unmanageable. But if commits are made too frequently, the number of commits may become unmanageable. Think of this similarly to how often you might make a new version of a document.
+
+![](images/week05/2021-02-04_22_15_28.png)
+
+Next, we will perform an initial pull/push. It is recommended in multi-user environments to perform a pull from the online repository before pushing. This lets you download to your local file system any files that have been updated by others.
+
+In the Git tab, click the `Pull` icon.
+
+![](images/week05/2021-02-04_22_17_19.png)
+
+
+Since no changes have been made to the online files, we see the message "Already up to date".
+
+![](images/week05/2021-02-04_22_17_41.png)
+
+Next, click the `Push` icon to upload any changed files.
+
+![](images/week05/2021-02-04_22_17_58.png)
+
+At some point in the process of establishing the connection to github, you may get some popups asking you to sign in. If this happens, proceed with the authorization.
+
+![](images/week05/2021-02-04_22_19_18.png)
+
+![](images/week05/2021-02-04_22_19_59.png)
+
+![](images/week05/2021-02-04_22_20_08.png)
+
+When the authorization is completed, the push will proceed. Your screen will look different, but the last line of text here shows a truncated version of the unique hash (identifier) of the push transaction. This has will allow you to download previous versions of the file in case you made commits and pushes that caused unintended consequences.
+
+![](images/week05/2021-02-04_22_20_32.png)
+
+If you refresh the page for your repository, you should see the updates you made to the README.md file. This is the basic process for updating files, committing changes, and pushing to github.
+
+![](images/week05/2021-02-04_22_21_18.png)
+
+
+Perform the same steps (click `Staged` then `Commit` for week_01.Rmd). Because this is a new file that was not in the github repository, when it is committed, it will show in all green since all of the text has been added. 
+
+![](images/week05/2021-02-04_22_46_24.png)
+
+Repeat the pull/push cycle and then refresh your browser to show that the file was added to the online github repository.
+
+![](images/week05/2021-02-04_22_48_45.png)
+
+If you click the file name you will see the contents.
+
+![](images/week05/2021-02-04_22_49_07.png)
+
+Let's make some changes to this file. Back in RStudio, add to the list of packages to load at line 51.
+
+```
+library(htmltools) # popup on Leaflet map
+```
+
+Change the description at line 122 to read 
+
+```
+... for a Leaflet map that has the Space Needle, Savery Hall, and the Woodland Park Zoo.
+```
+
+and change the code chunk to add two additional points and text popups for the point markers. The chunk should contain the following code:
+
+```
+# the Space Needle
+snxy <- data.frame(name = "Space Needle", x = -122.3493, y = 47.6205)
+space_needle <- st_as_sf(snxy, coords = c("x", "y"), crs = 4326)
+
+# Savery Hall
+shxy <- data.frame(name = "Savery Hall", x = -122.3083, y = 47.6572)
+savery_hall <- st_as_sf(shxy, coords = c("x", "y"), crs = 4326)
+
+# the Woodland Park Zoo
+zooxy <- data.frame(name = "Woodland Park Zoo", x = -122.3543, y = 47.6685)
+wp_zoo <- st_as_sf(zooxy, coords = c("x", "y"), crs = 4326)
+
+# rbind() to put two points in one data frame
+pts <- rbind(space_needle, savery_hall, wp_zoo)
+
+# a leaflet
+m <- leaflet() %>% 
+    addTiles() %>% 
+    addCircleMarkers(data = pts, label = ~htmlEscape(name))
+m
+```
+
+Save the edits to the file and then tap the "knit" button or enter at the console prompt `rmarkdown::render("week_01.Rmd")` to generate the HTML file. You should see that now there are three point markers, and if you hover over any of the markers you will see the name popup.
+
+![](images/week05/2021-02-04_22_32_50.png)
+
+### Git bash shell
+
+Another interface you can use is the Git bash shell. To open the shell, click `Tools > Shell`. 
+
+![](images/week05/2021-02-04_22_01_34.png) 
+
+All of the GUI commands we have used in RStudio are available in the shell. In fact, very little of the functionality of Git is available within RStudio. To take full advantage of Git, it is necessary to use the shell. There are a number of excellent tutorials on the use of the shell. For now because this is an introductory lesson, we will focus mainly on the RStudio interface,
+
+The shell should be set to the project folder; if not you can enter e.g., `cd /H/git_r` (note that this corresponds to the Windows folder `H:\git_r`).
+
+At the prompt, enter `git status`. This will show the status of all files, in this case showing that `week_01.Rmd` has been modified, and that there are some files that are not being tracked.
+
+![](images/week05/2021-02-04_23_36_02.png)
+
+### Ignoring specific files
+Sometimes we are not interested in particular files being committed or pushed to the repository. For version control, we are interested in managing the code that is used to create outputs rather than the outputs themselves, with the idea being that if you have the code, you can recreate any outputs.
+
+So there are files that can be ignored, which are specified in the `.gitignore` file. Open the file and add the line `*.html`. This tells Git not to bother managing HTML files (under the assumption that these are the output of rendering Rmd files).
+
+![](images/week05/2021-02-04_23_40_15.png)
+
+Save the `.gitignore` file and re-run `git status` at the shell (by tapping the up arrow key on your keyboard and tapping Enter). You should see that the HTML file does not show up in the list of changed or untracked files.
+
+![](images/week05/2021-02-04_23_42_51.png)
+
+Add the line `*.Rproj` to the `.gitignore` file--this file should not be necessary in the repository.
+
+Likewise, if you refresh the Git tab in RStudio, the HTML file is no longer listed.
+
+![](images/week05/2021-02-04_23_43_13.png)
+
+We will perform a few more tasks with the shell. Enter `add .gitignore` and `add week_01.Rmd`. This is the equivalent of clicking the `Staged` check box 
+
+![](images/week05/2021-02-04_23_45_14.png)
+
+Refreshing the Git tab will show that these two files are staged.
+
+![](images/week05/2021-02-04_23_45_37.png)
+
+
+### Exploring file change history
+Click `Commit` to prepare to commit the changes (addition of `.gitignore` and the changes to `week_01.Rmd`).
+
+As previously mentioned, deleted lines are shown in light red, added lines in light green, and unchanged lines with no highlighting. Click the entry for `week_01.Rmd` and the changes are apparent. Line numbers on the far left are the original line numbers. The next column to the right shows updated line numbers.
+
+This allows you to compare the currently saved version against the previous version of the file.
+
+![](images/week05/2021-02-04_23_48_02.png)
+
+Committing changes with the shell is done by entering 
+
+`
+git commit -m "somecomment"
+`
+
+This has the same effect as clicking `Commit` in RStudio and entering the comment.
+
+Note that if we have not made some initial user configurations, Git will print some informative text about your identity. To avoid this and to tag future commits, use the `git config --global` commands, e.g., 
+
+`
+git config --global user.name "My Full Name"
+git config --global user.email "myemailaddress@mydomain"
+`
+
+![](images/week05/2021-02-04_23_51_55.png)
+
+Once the commit is performed, either with the RStudio GUI or with the shell, you can verify that no files are listed to be possibly staged.
+
+![](images/week05/2021-02-04_23_53_10.png)
+
+Perform another pull/push cycle and then refresh your web browser. Click on the commit comment.
+
+![](images/week05/2021-02-05_00_10_46.png)
+
+You will see the changes to the two files in the last commit/push. The `.gitignore` file has all of its lines in green, indicating they are all new with respect to the repository. The file `week_01.Rmd` shows the same changes on github as we saw in the local view before pushing the commit to the server.
+
+
+![](images/week05/2021-02-05_00_12_20.png)
+
+### Restoring a previous version
+What good are all of these tracked changes if we cannot revert to a previous version of a file? Here we will make some intentional bad edits to a file, commit and push, but then retrieve a previous version of the file. Any version can be recovered. Note that this does not mean you can recover any and all edits to a file. It only means you can recover what changed between commits. For example, if I made a commit/push at noon, then made a lot of changes and saved the file multiple times before 5 PM and then made a commit/push, there would only be two versions of the file available. For this reason it is worth making commit/push cycles every time you thing you might want to revert to a previous version.
+
+The intentional bad change to `week_01.Rmd` is the complete removal of the code that produces the Leaflet map. See the following image.
+
+![](images/week05/2021-02-05_00_13_13.png)
+
+Perform the standard cycle: stage, commit (with comment), pull, push.
+
+![](images/week05/2021-02-05_00_14_07.png)
+
+![](images/week05/2021-02-05_00_14_24.png)
+
+![](images/week05/2021-02-05_00_16_23.png)
+
+![](images/week05/2021-02-05_00_17_10.png)
+
+You should see the large swath of deleted lines
+
+![](images/week05/2021-02-05_00_21_01.png)
+
+
+![](images/week05/2021-02-05_00_22_10.png)
+
+Back in the github, find and click the file name.
+
+![](images/week05/2021-02-05_00_24_21.png)
+
+The file contents will show the most recent saved version (missing the Leaflet map lines). Click on the `History` link, which will show all of the commits.
+
+![](images/week05/2021-02-05_00_25_05.png)
+
+Click the commit where you followed the questionable advice from your adviser.
+
+![](images/week05/2021-02-05_00_25_23.png)
+
+The missing lines are evident. What we would like to do is to go back to the version before the large deletion of lines.
+
+![](images/week05/2021-02-05_00_25_40.png)
+
+Identify the previous commit and click the clipboard icon to the left of the first characters of the commit hash. This will copy the hash, which is necessary for restoring that version.
+
+![](images/week05/2021-02-05_00_39_46.png)
+
+Back in the shell, enter
+
+```
+git show *****:week_01.Rmd
+```
+
+where `*****` is the hash.
+
+![](images/week05/2021-02-05_00_40_36.png)
+
+You will see the text that was present at that commit, which includes the deleted Leaflet map.
+
+![](images/week05/2021-02-05_00_40_59.png)
+
+To restore this previous version to a new file, enter
+
+```
+git show *****:week_01.Rmd > week_01_someadditionaldescription.Rmd
+```
+
+This prints the contents of the previously committed file and redirects the output to the named file after the `>` sign.
+
+![](images/week05/2021-02-05_00_45_16.png)
+
+If you open that file, you will see the restored text.
+
+![](images/week05/2021-02-05_00_46_04.png)
+
+## Conclusion
+This was a brief introduction to the main functionality of Git with RStudio and github. If you expect to perform even a modest amount of coding, you could benefit from Git as a way to keep track of your work, collaborate with others, and avoid programming disasters due to inadvertent deletion of overwriting of files.
+
+
+## Source code
+[05-week05.Rmd](05-week05.Rmd)
+
+```{r comment=''}
+cat(readLines("05-week05.Rmd"), sep = '\n')
+```

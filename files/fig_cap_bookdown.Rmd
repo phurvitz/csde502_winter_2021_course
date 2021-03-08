@@ -1,0 +1,10 @@
+---
+output:
+  bookdown::html_document2
+---
+
+```{r carsplot, fig.cap = "Cars: speed vs distance"}
+plot(cars)
+```
+
+See Figure \@ref(fig:carsplot) for a plot of cars speed vs. distance.

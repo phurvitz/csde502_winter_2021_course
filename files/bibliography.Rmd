@@ -1,0 +1,145 @@
+---
+title: "Bibliography in R Markdown"
+author: "[Phil Hurvitz](mailto:phurvitz@uw.edu)"
+date: '`r format(Sys.time(), "%Y-%m-%d %H:%M")`'
+header-includes: #allows you to add in your own Latex packages
+- \usepackage{float} #use the 'float' package
+- \floatplacement{figure}{H} #make every figure with caption = h
+output: 
+    bookdown::html_document2:
+        number_sections: true
+        self_contained: true
+        code_folding: hide
+        toc: true
+        toc_float:
+            collapsed: true
+            smooth_scroll: false
+    pdf_document:
+        number_sections: true
+        toc: true
+        fig_cap: yes
+        keep_tex: yes
+urlcolor: blue  
+bibliography: pmh.bib
+biblio-style: "apalike"
+link-citations: true
+---
+
+<!--these following settings control width and also make a DIV tag for black outlines for figures-->
+<style type="text/css">
+.main-container {
+  max-width: 2400px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+<style>
+.outline {
+   background-color: #000000;
+   padding:1px;
+   display: inline-block;
+}
+</style>
+
+
+```{r setup, message=FALSE, error=FALSE, warning=FALSE}
+# key setups
+library(sqldf) # to use sql syntax with data frames
+library(knitr) # knitr for kable tables
+library(kableExtra) # pretty tables
+library(sf) # simple features (GIS)
+library(leaflet) # nice maps
+library(tools) # md5sum
+
+# captions
+library(captioner)
+table_nums <- captioner(prefix = "Table")
+figure_nums <- captioner(prefix = "Figure")
+
+# for having DIV tags
+knitr::knit_hooks$set(class = function(before, options, envir) {
+  if(before){
+    sprintf("<div class = '%s'>", options$class)
+  }else{
+    "</div>"
+  }
+})
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+<!-- for a wide presentation -->
+<style type="text/css">
+.main-container {
+  max-width: 2400px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+<!-- a DIV for black outline, good for figures-->
+<style>
+.outline {
+   background-color: #000000;
+   padding:1px;
+   display: inline-block;
+}
+</style>
+
+# Introduction
+This example file uses the APA-like bibliography style. For an example of AMA-like bibliography, see [bibliography_ama.html](bibliography_ama.html) and its source code [bibliography_ama.Rmd](bibliography_ama.Rmd).
+
+See the source code at the end of this document to see exactly how the references were placed in the text.
+
+The examples of what you might see in a manuscript are highlighted in this document as __bold__ text.
+
+Typical citations are formatted with square brackets:
+
+```
+[@Duncan2008]
+```
+
+__Some fascinating stuff was brought to light [@Duncan2008]!__
+
+Multiple citations should be put in one set of square brackets, separated by semicolons:
+
+```
+[@Duncan2008, @Saelens2014]
+```
+
+__Two studies were completely unrelated [@Duncan2008; @Saelens2014].__
+
+Page numbers can be included, and author can be suppressed by including a hyphen `-` before the `@` symbol:
+
+```
+[-@Kang2013 pp. 1422]
+```
+
+__Kang et al. [-@Kang2013 pp. 1422] ignored PA bouts with mean accelerometry counts $\ge$ 2863 per 30 s epoch.__
+
+In-text citations can also be used as
+
+```
+text ... @Kang2013 ... more text
+```
+
+__@Kang2013 ignored PA bouts with mean accelerometry counts $\ge$ 2863 per 30 s epoch.__
+
+# Position of bibliography
+The list of cited references is automatically placed at the end of the document.
+
+For this document, because the source code should be printed after the references, we can include the following code to place the list of recerences exactly where they are wanted.
+
+```
+<div id="refs"></div>
+```
+
+# References
+
+<div id="refs"></div>
+
+<h2>Source code</h2>
+```{r, comment='', echo=FALSE}
+cat(readLines("bibliography.Rmd"), sep = '\n')
+```

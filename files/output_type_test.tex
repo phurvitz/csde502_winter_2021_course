@@ -1,0 +1,311 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={R Markdown Output Type Test},
+  pdfauthor={R. M. D. Trickster},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{R Markdown Output Type Test}
+\author{R. M. D. Trickster}
+\date{2021-01-24 18:59}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{output-format-testing}{%
+\section{Output format testing}\label{output-format-testing}}
+
+This document provides an example of using a single Rmd file to generate output with different content based on the output document type.
+
+The envelope-pushing examples below are complicated, and in many cases require generating strings that are rendered using the structure:
+
+The examples are unlikely--it is hard to imagine a case for which a single Rmd file should generate completely different output. But the examples should serve to demonstrate how different output can be included based on the type of output file.
+
+If this is an HTML document, the following apply:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Text below indicates ``This is HTML output and shows a Leaflet map.''
+\item
+  A Leaflet map is shown, along with a caption and cross-reference
+\item
+  Code chunks are displayed inline, ``hidden'' by default.
+\item
+  There is no source code at the end of the document.
+\end{enumerate}
+
+If this is PDF output, the following apply:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Text below indicates ``This is PDF output and therefore a Leaflet map cannot be added.''
+\item
+  The Poisson distribution equation is shown, with an equation number and cross reference.
+\item
+  Code chunks are not shown inline.
+\item
+  Source code is printed at the end of the document.
+\end{enumerate}
+
+This is PDF output and therefore a Leaflet map cannot be added.
+
+See the Poisson distribution (1) for details
+\begin{equation}
+      P\left( x \right) = \frac{{e^{ - \lambda } \lambda ^x }}{{x!}}
+    \end{equation}
+
+\hypertarget{source-code}{%
+\section{Source code}\label{source-code}}
+
+\begin{verbatim}
+---
+title: "R Markdown Output Type Test"
+author: "R. M. D. Trickster"
+date: '`r format(Sys.time(), "%Y-%m-%d %H:%M")`'
+header-includes: #allows you to add in your own Latex packages
+- \usepackage{float} #use the 'float' package
+- \floatplacement{figure}{H} #make every figure with caption = h
+output:
+bookdown::pdf_document2:
+number_sections: true
+toc: true
+fig_cap: yes
+keep_tex: yes
+bookdown::html_document2:
+number_sections: true
+self_contained: true
+code_folding: hide
+toc: true
+toc_float:
+collapsed: true
+smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+library(sf)
+library(leaflet)
+library(kableExtra)
+library(magrittr)
+library(knitr)
+library(tidyverse)
+library(captioner)
+
+# captions
+eqn_captions <- captioner::captioner(prefix="")
+fig_captions <- captioner::captioner(prefix="Figure")
+
+
+# test for output type; if HTML, include code; if PDF do not include code
+if(is_html_output()){
+knitr::opts_chunk$set(echo = TRUE)
+} else {
+knitr::opts_chunk$set(echo = FALSE)
+}
+```
+
+# Output format testing
+This document provides an example of using a single Rmd file to generate output
+    with different content based on the output document type.
+
+The envelope-pushing examples below are complicated, and in many cases require
+    generating strings that are rendered using the structure:
+
+<code><pre>```{r results='asis'}
+cat("
+some R code that generates some output
+")
+```</pre></code>
+
+The examples are unlikely--it is hard to imagine a case for which a single Rmd
+    file should generate completely different output. But the examples should
+    serve to demonstrate how different output can be included based on the type
+    of output file.
+
+If this is an HTML document, the following apply:
+
+1. Text below indicates "This is HTML output and shows a Leaflet map."
+1. A Leaflet map is shown, along with a caption and cross-reference
+1. Code chunks are displayed inline, "hidden" by default.
+1. There is no source code at the end of the document.
+
+If this is PDF output, the following apply:
+
+1. Text below indicates "This is PDF output and therefore a Leaflet map cannot
+    be added."
+1. The Poisson distribution equation is shown, with an equation number and cross
+    reference.
+1. Code chunks are not shown inline.
+1. Source code is printed at the end of the document.
+
+```{r, results='asis'}
+if(is_html_output()){
+foo <- ""
+cat("Because this is HTML output, a Leaflet map could be included!\n\n")
+cat("## A Leaflet Map\n")
+}
+```
+
+```{r}
+if(is_html_output()){
+# the Space Needle
+snxy <- data.frame(name = "Space Needle", x = -122.3493, y = 47.6205)
+space_needle <- st_as_sf(snxy, coords = c("x", "y"), crs = 4326)
+
+# a leaflet map
+m <- leaflet() %>%
+addTiles() %>%
+addCircleMarkers(data = space_needle)
+m
+}
+```
+
+```{r, results='asis'}
+if(is_html_output()){
+# make and print the caption
+# this creates a string object from the citation, and drops all white space
+cap <- fig_captions(name = "Leaflet", caption = "A Leaflet map centered at the
+    Space Needle\n\n")
+cat(cap)
+
+cite <- fig_captions(name = "Leaflet", display = "cite")
+
+# This adds the text
+cat(sprintf("See the Leaflet map (%s) for details.", cite))
+}
+```
+
+```{r, results='asis'}
+# if this is LaTeX output then print the Poisson distribution and use an
+    equation number and cross-reference
+if(is_latex_output()){
+cat("This is PDF output and therefore a Leaflet map cannot be added.\n\n")
+
+# an equation caption
+eqn_captions(name = "poisson", caption = "")
+
+# this creates a string object from the caption, and drops all white space
+cite <- eqn_captions(name = "poisson", display = "cite") %>%
+str_remove_all(pattern = "\\s")
+
+# This adds the text
+cat(sprintf("See the Poisson distribution (%s) for details", cite))
+
+# `cat' to print out an equation
+cat("
+\\begin{equation}
+P\\left( x \\right) = \\frac{{e^{ - \\lambda } \\lambda ^x }}{{x!}}\
+\\end{equation}
+")
+}
+```
+
+```{r results='asis'}
+# only print the source code if this is LaTeX output
+if(is_latex_output()){
+cat("# Source code\n\n")
+}
+```
+
+```{r comment='', }
+# only print the source code if this is LaTeX output
+if(is_latex_output()){
+srccode <- readLines("output_type_test.Rmd") %>%
+str_wrap(width = 80, exdent = 4)
+cat(srccode, sep = '\n')
+}
+```
+\end{verbatim}
+
+\end{document}
